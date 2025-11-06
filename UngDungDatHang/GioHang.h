@@ -1,95 +1,104 @@
 #pragma once
-#include <vector>
 #include <iostream>
 #include "MucGioHang.h"
-#include "SanPham.h"   
+#include "SanPham.h" 
 
 class GioHang {
 private:
-    std::vector<MucGioHang> danhMuc;
-    std::vector<MucGioHang>::iterator findItem(const SanPham& sanPham) {
-        for (auto it = danhMuc.begin(); it != danhMuc.end(); ++it) {
-            if (it->getSanPham().getmaSanPham() == sanPham.getmaSanPham()) {
-                return it;
+    int soLuongHienTai; 
+    int timViTri(const SanPham& sanPham) {
+        for (int i=0; i<soLuongHienTai; i++) {
+            if (danhMuc[i].getSanPham().getMaSP() == sanPham.getMaSP()) {
+                return i;
             }
         }
-        return danhMuc.end();
+        return -1;
     }
 public:
+    GioHang() {
+        soLuongHienTai= 0;
+    }
     void addItem(const SanPham& sanPham, int quantity) {
-        auto it = findItem(sanPham);
-        if (it != danhMuc.end()) {
-            int oldQuantity = it->getSoLuong();
-            it->setSoLuong(oldQuantity + quantity);
-            std::cout << "Cap nhat so luong cho " << sanPham.gettenSanPham() << std::endl;
+        int viTri= timViTri(sanPham); 
+        if (viTri != -1) {
+            int soLuongCu = danhMuc[viTri].getSoLuong();
+            danhMuc[viTri].setSoLuong(soLuongCu + quantity);
+            std::cout << "Cap nhat so luong cho " << sanPham.getTenSP() << std::endl;
         } else {
-            danhMuc.push_back(MucGioHang(sanPham, quantity));
+            if (soLuongHienTai >= MAX_ITEMS) {
+                std::cout << "Gio hang da day!" << std::endl;
+                return;
+            }
+            danhMuc[soLuongHienTai] = MucGioHang(sanPham, quantity);
+            soLuongHienTai++;
             std::cout << "Da them " << sanPham.getTenSP() << " vao gio hang" << std::endl;
         }
     }
 
     void removeItem(const SanPham& sanPham) {
-        auto it = findItem(sanPham);
-        if (it != danhMuc.end()) {
-            danhMuc.erase(it);
-            std::cout << "Da xoa " << sanPham.gettenSanPham() << " khoi gio hang" << std::endl;
+        int viTri = timViTri(sanPham);
+        if (viTri != -1) {
+            for (int i=viTri; i<soLuongHienTai - 1; i++) {
+                danhMuc[i] = danhMuc[i + 1];
+            }
+            soLuongHienTai--; 
+            std::cout << "Da xoa " << sanPham.getTenSP() << " khoi gio hang" << std::endl;
         } else {
-            std::cout << "Khong tim thay " << sanPham.gettenSanPham() << " trong gio" << std::endl;
+            std::cout << "Khong tim thay " << sanPham.getTenSP() << " trong gio hang" << std::endl;
         }
     }
 
     void updateQuantity(const SanPham& sanPham, int newQuantity) {
-        auto it = findItem(sanPham);
-        if (it != danhMuc.end()) {
+        int viTri = timViTri(sanPham);
+
+        if (viTri != -1) {
             if (newQuantity > 0) {
-                it->setSoLuong(newQuantity);
-                std::cout << "Cap nhat so luong " << sanPham.gettenSanPham() << " thanh " << newQuantity << std::endl;
+                danhMuc[viTri].setSoLuong(newQuantity);
+                std::cout << "Cap nhat so luong " << sanPham.getTenSP() << " thanh " << newQuantity << std::endl;
             } else {
-                danhMuc.erase(it);
-                std::cout << "So luong it hon bang 0, da xoa '" << sanPham.gettenSanPham() << " khoi gio hang" << std::endl;
+                removeItem(sanPham);
             }
         } else {
-            std::cout << "Khong tim thay " << sanPham.gettenSanPham() << " trong gio hang" << std::endl;
+            std::cout << "Khong tim thay " << sanPham.getTenSP() << " trong gio" << std::endl;
         }
     }
 
     double tinhTongTien() {
         double total = 0.0;
-        for (const auto& muc : danhMuc) {
-            total += muc.tinhThanhTien();
+        for (int i=0; i<soLuongHienTai; i++) {
+            total += danhMuc[i].tinhThanhTien();
         }
         return total;
     }
 
     void hienThiGioHang() {
-        std::cout << "\nGIO HANG CUA BAN\n";
-        if (danhMuc.empty()) {
+        std::cout << "\n GIO HANG CUA BAN \n";
+        if (soLuongHienTai == 0) {
             std::cout << "Gio hang dang trong!\n" << std::endl;
             return;
         }
 
         std::cout << std::left
-                  << std::setw(10) << "Ma San Pham"
+                  << std::setw(10) << "Ma SP"
                   << std::setw(20) << "Ten San Pham"
                   << std::setw(10) << "So Luong"
-                  << std::setw(15) << "Gia San Pham"
+                  << std::setw(15) << "Don Gia"
                   << std::setw(15) << "Thanh Tien" << std::endl;
-
-        for (const auto& muc : danhSachMuc) {
-            muc.hienThi();
+        for (int i = 0; i < soLuongHienTai; i++) {
+            danhMuc[i].hienThi();
         }
 
-        std::cout << std::right << std::setw(55) << "TONG CONG: "
+        std::cout << std::right << std::setw(55) << "\n TONG CONG: "
                   << std::fixed << std::setprecision(0)
-                  << tinhTongTien() << " VND" << std::endl;
+                  << tinhTongTien() << " VND\n" << std::endl;
     }
 
     void xoaTatCa() {
-        danhMuc.clear();
-        std::cout << "Da xoa toan bo gio hang." << std::endl;
+        soLuongHienTai = 0;
+        std::cout << "> Da xoa toan bo gio hang." << std::endl;
     }
 
     bool kiemTraRong() const {
-        return danhMuc.empty();
+        return (soLuongHienTai == 0);
     }
 };
