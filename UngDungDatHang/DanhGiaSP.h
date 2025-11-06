@@ -1,18 +1,19 @@
 #pragma once
 #include <iostream>
+#include "KhachHang.h"
+#include "SanPham.h"
 using namespace std;
 
-class DanhGia {
+class DanhGia : public KhachHang, public  SanPham{
 private:
     string  MaDanhGia;
-    int MaSanPham;
     float Diem;
     string BinhLuan;
     int DanhGiaTichCuc;
     int DanhGiaTieuCuc;
 public:
-    DanhGia(string MaDG = " ", int MaSP = 1, string binhluan = " ")
-        : MaDanhGia(MaDG), MaSanPham(MaSP), BinhLuan(binhluan){
+    DanhGia(string maKH = " ", string maSP = " ", string MaDG = " ", string binhluan = " ")
+        : MaDanhGia(MaDG), SanPham(maSP), BinhLuan(binhluan){
 
     }
     float getDiem() const {
@@ -39,8 +40,8 @@ public:
     // }
 
     void displayy() {
-        cout << "Đánh giá #" << MaDanhGia << " -Mã sản phẩm " << MaSanPham<< endl;
-        cout << "Người dùng: " << userID << " | Điểm: " << Diem << "/5 sao\n";
+        cout << "Đánh giá #" << MaDanhGia << " -Mã sản phẩm " << SanPham::getMa()<< endl;
+        cout << "Người dùng: " <<KhachHang::getMa() << " | Điểm: " << Diem << "/5 sao\n";
         cout << "Bình luận: " << BinhLuan << endl;
         // cout << "Ngày: " << reviewDate << " | Thích: " << likes
         //      << " | Không thích: " << dislikes << endl;
