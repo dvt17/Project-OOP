@@ -32,7 +32,7 @@ public:
 			return false;
 		}
 	}
-	float getGiaTri() {
+	float DungMa() {
 		if (MaGiam::HieuLuc()) {
 			SuDung = false;
 			return GiaTri;
@@ -45,5 +45,6 @@ public:
 		out << m.TenMa << " " << m.GiaTri*100 << "% " << (m.SuDung ? "Chua Dung":"Da Dung") << " " << m.n.tm_hour << ":" << m.n.tm_min << ":" << m.n.tm_sec << " " << m.n.tm_mday << "/" << m.n.tm_mon + 1 << "/" << m.n.tm_year + 1900 << " " << (m.HieuLuc() ? "Con hieu luc":"Het hieu luc") << endl;
 		return out;
 	}
+	~MaGiam(){}
 };
 
