@@ -7,7 +7,7 @@
 #include "User.h"
 using namespace std;
 
-int main(){
+int main() {
     ifstream file("SanPham.txt");
     vector<SanPham> ds;
     SanPham sp;
@@ -15,13 +15,14 @@ int main(){
         ds.push_back(sp);
     }
     string s = "========= MENU =========\n"
-                "[1]. Dang ky tai khoan\n"
-                "[2]. Dang nhap\n"
-                "[3]. Thoat\n"
-                "========================\n";
+        "[1]. Dang ky tai khoan\n"
+        "[2]. Dang nhap\n"
+        "[3]. Thoat\n"
+        "========================\n";
     cout << s << endl;
     int c; bool ok;
     ok = true;
+    User u(tk, mk);
     while (ok) {
         cout << "Nhap lua chon: ";
         cin >> c;
@@ -32,10 +33,10 @@ int main(){
             cin >> tk;
             cout << "Nhap mat khau: ";
             cin >> mk;
-            User u(tk, mk);
             u.ghiFile();
             cout << "Dang ky thanh cong!\n";
-        }else if(c == 2){
+        }
+        else if (c == 2) {
             string tk, mk;
             cout << "Nhap tai khoan: ";
             cin >> tk;
@@ -53,7 +54,5 @@ int main(){
             ok = false;
         }
     }
-
-    
     return 0;
 }
