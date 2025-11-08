@@ -8,7 +8,8 @@ class mucTrongGioHang: public SanPham {
     private: 
         int soLuong;
     public:
-        mucTrongGioHang (string ma, string ten, string dm, double g, double t, int quan = 0) : SanPham(ma, ten, dm, g, t), soLuong(quan){}
+        mucTrongGioHang (string ma, string ten, string dm, double g, double t, int quan = 0)
+             : SanPham(ma, ten, dm, g, t), soLuong(quan){}
         friend istream& operator>> (istream& in, mucTrongGioHang& c);
         friend ostream& operator<< (istream& out, mucTrongGioHang& c);
         int getSoLuong() const { return soLuong;}

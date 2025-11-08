@@ -1,8 +1,8 @@
 SP001 BanhMiThit ThucPham 12000 40
 SP002 SuaTuoiCoDuong ThucUong 18000 50
-SP003 MiGoi HaoHao ThucPham 4000 200
-SP004 CocaCola Lon ThucUong 12000 60
-SP005 Pepsi Lon ThucUong 12000 55
+SP003 MiGoiHaoHao ThucPham 4000 200
+SP004 CocaColaLon ThucUong 12000 60
+SP005 PepsLon ThucUong 12000 55
 SP006 SnackKhoaiTay ThucPham 15000 75
 SP007 NuocSuoiLavie ThucUong 7000 100
 SP008 KeoMutTongHop ThucPham 10000 80
@@ -12,10 +12,10 @@ SP011 DauGoiClear CaNhan 45000 25
 SP012 XaPhongLifebuoy CaNhan 18000 35
 SP013 BanhQuyCosy ThucPham 25000 45
 SP014 BanhTrangMe ThucPham 8000 70
-SP015 KeoSingum Doublemint ThucPham 10000 60
+SP015 KeoSingumDoublemint ThucPham 10000 60
 SP016 TraSuaThai ThucUong 25000 40
 SP017 NuocCamEp ThucUong 20000 35
-SP018 MyTom Omachi ThucPham 6000 90
+SP018 MyTomOmachi ThucPham 6000 90
 SP019 DauAnTuongAn ThucPham 45000 20
 SP020 TuongOtCholimex ThucPham 15000 40
 SP021 BotNgotAjinomoto ThucPham 22000 35
@@ -27,8 +27,8 @@ SP026 SuaDacOngTho ThucPham 30000 20
 SP027 BotGiacTayOmo GiaDung 35000 25
 SP028 NuocRuaChenSunlight GiaDung 32000 30
 SP029 KhauTrangYTe CaNhan 10000 100
-SP030 BanChaiDanhRang P/S CaNhan 15000 40
-SP031 DauTamTreEm Johnsons CaNhan 45000 15
+SP030 BanChaiDanhRangP/S CaNhan 15000 40
+SP031 DauTamTreEmJohnsons CaNhan 45000 15
 SP032 NuocHoaHong ThoiTrang 120000 10
 SP033 KemDanhRangCloseUp CaNhan 20000 25
 SP034 BanhMiPate ThucPham 15000 30
@@ -41,7 +41,7 @@ SP040 MiLyKao ThucPham 7000 80
 SP041 NuocLocAquafina ThucUong 8000 100
 SP042 DauOliveExtra GiaDung 95000 15
 SP043 BotMiMeizan ThucPham 25000 20
-SP044 DuongTrangBien Hoa ThucPham 23000 30
+SP044 DuongTrangBienHoa ThucPham 23000 30
 SP045 TraSuaTranChau ThucUong 28000 25
 SP046 BanhMiBoSua ThucPham 13000 35
 SP047 TraDaChanh ThucUong 15000 50
