@@ -7,7 +7,7 @@ class DiaChi
 private:
 	string soNha, tenDuong, tenPhuong, tenQuan, tenTP;
 public:
-	DiaChi(string sn, string d, string p, string q, string tp) : soNha(sn), tenDuong(d), tenPhuong(p), tenQuan(q), tenTP(tp){}
+	DiaChi(string sn ="", string d="", string p="", string q="", string tp="" ) : soNha(sn), tenDuong(d), tenPhuong(p), tenQuan(q), tenTP(tp){}
 	friend istream& operator >> (istream& in, DiaChi& s) {
 		in >> s.soNha >> s.tenDuong >> s.tenPhuong >> s.tenQuan >> s.tenTP;
 		return in;

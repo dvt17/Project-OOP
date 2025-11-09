@@ -8,6 +8,8 @@
 #include "TroChoi.h"
 #include "MucGioHang.h"
 #include "GioHang.h"
+#include "DonHang.h"
+#include "KhachHang.h"
 
 using namespace std;
 // vector<SanPham> ds;
@@ -65,7 +67,7 @@ int main() {
     // }
  
     // file.close();
-
+    vector<MaGiam> ma;
     vector<SanPham> ds = DocFile();
     string s = "========= MENU =========\n"
         "[1]. Dang ky tai khoan\n"
@@ -87,7 +89,7 @@ int main() {
             string s = "========= MENU =========\n"
             "[1]. Danh muc san pham\n"
             "[2]. Game\n"
-            "[3]. Gio hang\n"
+            "[3]. Mua hang\n"
             "========================\n";
             cout << s <<endl;
            
@@ -107,33 +109,17 @@ int main() {
 
                 }
                 else if(chon == '2' ){
+                    
                     string ten;
                     cin >> ten;
                     TroChoi c(ten);
                     c.CapNhatLuotChoi();
                     c.BatDau();
-                    c.DoiThuong();
+
+                    MaGiam m = c.DoiThuong();
+                    ma.push_back(m);
                 }
                 else if(chon == '3'){
-                    // string tensp;
-                    // cout <<"Nhap ten san pham muon mua: ";
-                    // cin >>tensp;
-                    
-                    // int soluong;
-                    // cout <<"Nhap so luong san pham: ";
-                    // cin>> soluong;
-                    
-                    // m.nhapmuc();
-                    // m.tinhTong(m.getTen());
-                    // m.displayInfo();
-                    // GioHang gh(m);
-
-                    // gh.xemGioHang();
-
-                }
-                else if(chon == '4'){
-                    mucTrongGioHang m;
-                    
                     GioHang gh; 
                     cout << "=== CHUONG TRINH QUAN LY GIO HANG ===\n";
 
@@ -144,10 +130,10 @@ int main() {
                     gh.xuat();
 
                     // Xóa sản phẩm (tùy chọn)
-                    char xoa;
+                    char lc;
                     cout << "\nBan co muon xoa san pham nao? (y/n): ";
-                    cin >> xoa;
-                    if (xoa == 'y' || xoa == 'Y') {
+                    cin >> lc;
+                    if (lc == 'y' || lc == 'Y') {
                         string tenXoa;
                         cout << "Nhap ten san pham muon xoa: ";
                         cin.ignore();
@@ -155,6 +141,73 @@ int main() {
                         gh.xoaMuc(tenXoa);
                         gh.xuat();
                     }
+                    cout <<"Ban co muon toan bo san pham trong gio hang hay khong(y/n)? ";
+                    cin >> lc;
+                    lc = toupper(lc);
+                    if(lc == 'Y'|| lc =='YES'){
+                        float  gt;
+                        DiaChi dc;
+                        KhachHang kh;
+                        cout <<"Nhap thong tin(HoTen, SoDienThoai, Email,DiaChi): ";
+                        cin >> kh >> dc;
+                    
+                        cout << "==========Thong tin don hang==========" <<endl;
+                        cout << kh << dc <<endl;
+                        DonHang d(dc);
+                        d.ngayUocTinh();
+                        cout <<d;
+                        cout <<"Tien ship: "<< d.tinhPhiShip() * gh.tongGioHang() << endl;
+                        cout << "Tong gio hang: "<<gh.tongGioHang() <<endl;
+                        cout <<"==========================================" <<endl;
+                        double tt = gh.tongGioHang() + (d.tinhPhiShip() * gh.tongGioHang()) ;
+                        if(ma.empty()){
+                            cout << "Ban khong co ma giam gia nao!!!"<<endl;
+                            cout << "Thanh toan: "<< tt<<endl;
+
+                        }
+                        else {
+                            cout <<"Ban co muon ap ma giam gia khong(y/n)? ";
+                            cin >>lc;
+                            lc = toupper(lc);
+                            if(lc == 'Y'|| lc =='YES'){
+                                cout <<"Danh sach ma giam: " << endl;
+                                for(auto x : ma){
+                                    cout << x <<endl;
+                                }
+                                string s;
+                                cout <<"Nhap ma can dung: ";
+                                cin >> s;
+                              
+                                for(auto x: ma){
+                                    if(s == x.getTM()&&x.HieuLuc()){
+                                        gt = x.DungMa();
+                                    }
+                                    else{
+                                        cout <<"Ma khong the su dung" << endl;
+                                    } 
+                                }
+                            }
+
+                           
+                            cout << "Thanh toan: " << tt - tt*gt;
+                        }
+                       
+                       
+                        
+
+                    }
+                    else {
+                        break;
+                    }
+                 
+
+
+                }
+                else if(chon == '4'){
+                 
+                    
+
+
                 }
 
             }

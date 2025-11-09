@@ -19,12 +19,13 @@ class mucTrongGioHang : public SanPham{
         
         mucTrongGioHang nhapmuc(){
             //vector <SanPham> s = DocFile();
-            // ifstream file("SanPham.txt");
-            // SanPham sp;
-            // while (file >> sp) {
-            //     s.push_back(sp);
-            // }
-            // file.close();
+            ifstream file("SanPham.txt");
+            SanPham sp;
+            while (file >> sp) {
+                s.push_back(sp);
+            }
+            file.close();
+            //cout << s.size();
             cout << "Nhap ten san pham muon mua: ";
             cin >> tenSanPham;
             cout << "Nhap so luong san pham: ";
@@ -43,9 +44,9 @@ class mucTrongGioHang : public SanPham{
             
             for(auto x : s){
             
-                if (x.getTen() == tenSanPham)
-                    return x.getGia() * soLuong;
-        
+                if (x.getTen() == ten){
+                    return x.getGia()* soLuong;
+                }
                 // if(x.getTen() == ten ){
 
                 //     return x.getGia() * soLuong;
