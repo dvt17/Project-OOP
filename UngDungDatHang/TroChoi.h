@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <cstdlib>
+#include <fstream>
+#include <map>
 #include "MaGiam.h"
 
 class TroChoi {
@@ -17,12 +19,48 @@ public:
         luotTro2 = 3;
         luotTro3 = 3;
         chonTro = 0;
+        thoiGianBatDau = 0;
     }
-
+    friend istream& operator>>(istream& in, TroChoi& p) {
+        in >> p.tenNguoiChoi >> p.diem >> p.luotTro1 >> p.luotTro2 >> p.luotTro3 >> p.thoiGianBatDau;
+        return in;
+    }
+    friend ostream& operator<<(ostream& out, const TroChoi& p) {
+        out << p.tenNguoiChoi << " " << p.diem << " " << p.luotTro1 << " " << p.luotTro2 << " " << p.luotTro3 << " " << p.thoiGianBatDau;
+        return out;
+    }
+    void CapNhatLuotChoi() {
+        TroChoi dulieu;
+        map<string, TroChoi> dsDuLieu;
+        fstream file("TroChoi.txt", ios::in);
+        while (file >> dulieu) {
+            dsDuLieu[dulieu.tenNguoiChoi] = dulieu;
+        }
+        for (auto& it : dsDuLieu) {
+            if (tenNguoiChoi == it.first) {
+                dulieu = it.second;
+            }
+            else {
+                dulieu = dsDuLieu["Khach"];
+            }
+        }
+        file.close();
+        time_t thoiGianTroiQua = time(0) - dulieu.thoiGianBatDau;
+        double luotHoiLai;
+        if (dulieu.thoiGianBatDau == 0) {
+            luotHoiLai = 0;
+        }
+        else {
+            luotHoiLai = thoiGianTroiQua / 60.0;
+        }
+        luotTro1 = (luotHoiLai + dulieu.luotTro1 > 3) ? 3 : (int)(luotHoiLai + dulieu.luotTro1);
+        luotTro2 = (luotHoiLai + dulieu.luotTro2 > 3) ? 3 : (int)(luotHoiLai + dulieu.luotTro2);
+        luotTro3 = (luotHoiLai + dulieu.luotTro3 > 3) ? 3 : (int)(luotHoiLai + dulieu.luotTro3);
+    }
     void BatDau() {
         cout << "=== Xin chao, " << tenNguoiChoi << " ===\n";
         cout << "Chon tro choi:\n";
-        cout << "1. Doan so\n2. Vong xoay man may\n3. Quy luat day so\n";
+        cout << "1. Doan so\n2. Vong xoay man may\n3. Quy luat day so\n4. Thoat\n";
         cout << "Nhap lua chon: ";
         cin >> chonTro;
         thoiGianBatDau = time(0);
@@ -30,8 +68,12 @@ public:
         case 1: Game1(); break;
         case 2: Game2(); break;
         case 3: Game3(); break;
+        case 4: break;
         default: cout << "Lua chon khong hop le.\n"; break;
         }
+        fstream file("TroChoi.txt", ios::out | ios::app);
+        file << *this << endl;
+        file.close();
     }
 
     void Game1() {
@@ -39,7 +81,7 @@ public:
         int so = rand() % 30 + 1;
         while (luotTro1 > 0) {
             int chon;
-            cout << "Nhap 1 so (1-30): ";
+            cout << "[" << luotTro1 << "/3 luot] Nhap 1 so (1-30): ";
             cin >> chon;
             luotTro1--;
             if (chon == so) {
@@ -57,7 +99,7 @@ public:
             }
         }
         if (luotTro1 == 0) {
-            cout << "Ban da het 3 luot choi!" << endl;
+            cout << "Ban da het luot choi!" << endl;
         }
     }
     void Game2() {
@@ -66,7 +108,7 @@ public:
         srand(time(NULL));
         cin.ignore();
         while (luotTro2 > 0) {
-            cout << "An [Enter] de quay hoac an [X] de thoat: ";
+            cout << "[" << luotTro2 << "/3 luot] An [Enter] de quay hoac an [X] de thoat: ";
             cin.get(quay);
             if (quay == '\n') {
                 for (int i = 0; i < 3; i++) {
@@ -94,7 +136,7 @@ public:
             }
         }
         if (luotTro2 == 0) {
-            cout << "Ban da het 3 luot choi! " << endl;
+            cout << "Ban da het luot choi! " << endl;
         }
     }
     void Game3() {
@@ -146,7 +188,7 @@ public:
         }
         while (luotTro3 > 0) {
             string thuLai;
-            cout << "Nhap so: ";
+            cout << "[" << luotTro3 << "/3 luot] Nhap so: ";
             cin >> soDoan;
             luotTro3--;
             if (daySo[4] == soDoan) {
@@ -171,7 +213,7 @@ public:
             }
         }
         if (luotTro3 == 0) {
-            cout << "Ban da het 3 luot choi! " << endl;
+            cout << "Ban da het luot choi! " << endl;
             cout << "Day so: ";
             for (int i = 0; i < 4; i++) {
                 if (i == 3) {

@@ -110,6 +110,7 @@ int main() {
                     string ten;
                     cin >> ten;
                     TroChoi c(ten);
+                    c.CapNhatLuotChoi();
                     c.BatDau();
                     c.DoiThuong();
                 }
