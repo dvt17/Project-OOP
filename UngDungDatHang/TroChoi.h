@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <cstdlib>
 #include <fstream>
+#include <map>
 #include "MaGiam.h"
 
 class TroChoi {
@@ -24,10 +25,25 @@ public:
         in >> p.tenNguoiChoi >> p.diem >> p.luotTro1 >> p.luotTro2 >> p.luotTro3 >> p.thoiGianBatDau;
         return in;
     }
+    friend ostream& operator<<(ostream& out, const TroChoi& p) {
+        out << p.tenNguoiChoi << " " << p.diem << " " << p.luotTro1 << " " << p.luotTro2 << " " << p.luotTro3 << " " << p.thoiGianBatDau;
+        return out;
+    }
     void CapNhatLuotChoi() {
         TroChoi dulieu;
+        map<string, TroChoi> dsDuLieu;
         fstream file("TroChoi.txt", ios::in);
-        file >> dulieu;
+        while (file >> dulieu) {
+            dsDuLieu[dulieu.tenNguoiChoi] = dulieu;
+        }
+        for (auto& it : dsDuLieu) {
+            if (tenNguoiChoi == it.first) {
+                dulieu = it.second;
+            }
+            else {
+                dulieu = dsDuLieu["Khach"];
+            }
+        }
         file.close();
         time_t thoiGianTroiQua = time(0) - dulieu.thoiGianBatDau;
         double luotHoiLai;
@@ -35,7 +51,7 @@ public:
             luotHoiLai = 0;
         }
         else {
-            luotHoiLai = thoiGianTroiQua / (2.0 * 3600);
+            luotHoiLai = thoiGianTroiQua / 60.0;
         }
         luotTro1 = (luotHoiLai + dulieu.luotTro1 > 3) ? 3 : (int)(luotHoiLai + dulieu.luotTro1);
         luotTro2 = (luotHoiLai + dulieu.luotTro2 > 3) ? 3 : (int)(luotHoiLai + dulieu.luotTro2);
@@ -55,8 +71,8 @@ public:
         case 4: break;
         default: cout << "Lua chon khong hop le.\n"; break;
         }
-        fstream file("TroChoi.txt", ios::out);
-        file << tenNguoiChoi << " " << diem << " " << luotTro1 << " " << luotTro2 << " " << luotTro3 << " " << thoiGianBatDau;
+        fstream file("TroChoi.txt", ios::out | ios::app);
+        file << *this << endl;
         file.close();
     }
 
