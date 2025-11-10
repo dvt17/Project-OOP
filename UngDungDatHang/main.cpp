@@ -35,19 +35,21 @@ void dangKi(){
     cout << "Dang ky thanh cong!\n";
 }
 
-void dangNhap(){
+bool dangNhap(){
     string tk, mk;
    
     cout << "Nhap tai khoan: ";
     cin >> tk;
     cout << "Nhap mat khau: ";
     cin >> mk;
-    User u(tk, mk);
-    if (u.dangNhap(tk, mk)) {
+    // User u(tk, mk);
+    if (User::dangNhap(tk, mk)) {
         cout << "Dang nhap thanh cong!\n";
+       return true;
     }
     else {
         cout << "Sai tai khoan hoac mat khau!\n";
+       return false;
     }
 }
 
@@ -77,19 +79,22 @@ int main() {
     cout << s << endl;
     int c; bool ok;
     ok = true;
-   
+// //    string ten;
+//     cin >> ten;
+    TroChoi t;
     while (ok) {
         cout << "Nhap lua chon: ";
         cin >> c;
         if (c == 1) {
             dangKi();
         }
-        else if (c == 2) {
-            dangNhap();
+        else if (c == 2 && dangNhap() ) {
+            
             string s = "========= MENU =========\n"
             "[1]. Danh muc san pham\n"
             "[2]. Game\n"
             "[3]. Mua hang\n"
+            "[4]. Danh gia\n"
             "========================\n";
             cout << s <<endl;
            
@@ -109,14 +114,13 @@ int main() {
 
                 }
                 else if(chon == '2' ){
-                    
-                    string ten;
-                    cin >> ten;
-                    TroChoi c(ten);
-                    c.CapNhatLuotChoi();
-                    c.BatDau();
-
-                    MaGiam m = c.DoiThuong();
+                    // string s;
+                    // cout <<"Nhap ten nguoi choi: ";
+                    // cin >>s;
+                    // t(s);
+                    t.CapNhatLuotChoi();
+                    t.BatDau();
+                    MaGiam m = t.DoiThuong();
                     ma.push_back(m);
                 }
                 else if(chon == '3'){
@@ -181,10 +185,14 @@ int main() {
                                 for(auto x: ma){
                                     if(s == x.getTM()&&x.HieuLuc()){
                                         gt = x.DungMa();
+                                        cout << "Dung ma thanh cong" <<endl;
+                                        break;
                                     }
-                                    else{
-                                        cout <<"Ma khong the su dung" << endl;
-                                    } 
+                                    // else{
+                                    //     cout <<"Ma khong the su dung" << endl;
+                                    //     break;
+                                        
+                                    // } 
                                 }
                             }
 
@@ -204,7 +212,7 @@ int main() {
 
                 }
                 else if(chon == '4'){
-                 
+                    
                     
 
 
