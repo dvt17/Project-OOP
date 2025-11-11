@@ -66,7 +66,7 @@ string chuyenKiTu(string s)
     return s;
 }
 
-vector<DanhGia> docDanhGia(const string &fileName = "DanhGia.txt")
+vector<DanhGia> docDanhGia(const string& fileName = "DanhGia.txt")
 {
     vector<DanhGia> ds;
     ifstream file(fileName);
@@ -81,7 +81,7 @@ vector<DanhGia> docDanhGia(const string &fileName = "DanhGia.txt")
     file.close();
     return ds;
 }
-void ghiDanhGia(const DanhGia &dg, const string &fileName = "DanhGia.txt")
+void ghiDanhGia(const DanhGia& dg, const string& fileName = "DanhGia.txt")
 {
     ofstream file(fileName, ios::app);
     file << dg;
@@ -94,17 +94,18 @@ int main()
     vector<SanPham> ds = DocFile();
     vector<MaGiam> ma;
     string s = "========= MENU =========\n"
-               "[1]. Dang ky tai khoan\n"
-               "[2]. Dang nhap\n"
-               "[3]. Thoat\n"
-               "========================\n";
-    cout << s << endl;
+        "[1]. Dang ky tai khoan\n"
+        "[2]. Dang nhap\n"
+        "[3]. Thoat\n"
+        "========================\n";
+
     int c;
     bool ok;
     ok = true;
     TroChoi t;
     while (ok)
     {
+        cout << s << endl;
         cout << "Nhap lua chon: ";
         cin >> c;
         if (c == 1)
@@ -117,11 +118,11 @@ int main()
             while (ok2)
             {
                 string s = "========= MENU =========\n"
-                           "[1]. Danh muc san pham\n"
-                           "[2]. Game\n"
-                           "[3]. Mua hang\n"
-                           "[4]. Danh gia\n"
-                           "========================\n";
+                    "[1]. Danh muc san pham\n"
+                    "[2]. Game\n"
+                    "[3]. Mua hang\n"
+                    "[4]. Danh gia\n"
+                    "========================\n";
                 cout << s << endl;
                 char chon;
                 cout << "Nhap lua chon: ";
@@ -142,6 +143,10 @@ int main()
                 }
                 else if (chon == '2')
                 {
+                    string ten;
+                    cout << "Nhap ten: ";
+                    cin >> ten;
+                    t.setTen(ten);
                     t.CapNhatLuotChoi();
                     t.BatDau();
                     MaGiam m = t.DoiThuong();
@@ -176,7 +181,9 @@ int main()
                         KhachHang kh;
                         cout << "Nhap thong tin(HoTen, SoDienThoai, Email,DiaChi): ";
                         cin >> kh >> dc;
-
+                        fstream file("ThongTinGiaoHang.txt", ios::app);
+                        file << kh << dc;
+                        file.close();
                         cout << "==========Thong tin don hang==========" << endl;
                         cout << kh << dc << endl;
                         DonHang d(dc);
@@ -254,7 +261,7 @@ int main()
 
                             ofstream file("DanhGia.txt", ios::app);
                             file << dg.getDiem() << "|"
-                                 << dg.getBinhLuan() << "\n";
+                                << dg.getBinhLuan() << "\n";
                             file.close();
 
                             cout << "Them danh gia thanh cong!\n";
