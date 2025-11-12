@@ -123,9 +123,11 @@ int main()
                 string s = "========= MENU =========\n"
                     "[1]. Danh muc san pham\n"
                     "[2]. Game\n"
-                    "[3]. Xem gio hang\n"
-                    "[4]. Mua hang\n"
-                    "[5]. Danh gia\n"
+                    "[3]. Them san pham vao gio hang\n"
+                    "[4]. Xem gio hang\n"
+                    "[5]. Mua hang\n"
+                    "[6]. Danh gia\n"
+                    "[0]. Thoat"
                     "========================\n";
                 cout << s << endl;
                 char chon;
@@ -172,14 +174,16 @@ int main()
                         getline(cin, tenXoa);
                         gh.xoaMuc(tenXoa);
                     }
+                }
+                else if(chon == '4'){
                     cout << "==========Thong tin gio hang==========" << endl;
                     for (auto it : dsGH) {
                         it.displayInfo();
                     }
                     cout << "======================================" << endl;
                 }
-                else if (chon == '4') {
-                    cout << "Ban co muon mua toan bo san pham trong gio hang hay khong(y/n)? ";
+                else if (chon == '5') {
+                    cout << "Ban xac nhan mua toan bo san pham trong gio hang hay khong(y/n)? ";
                     cin >> lc;
                     lc = chuyenKiTu(lc);
                     if (lc == "Y" || lc == "YES")
@@ -194,7 +198,7 @@ int main()
                         DonHang d(dc);
                         d.ngayUocTinh();
                         fstream file("ThongTinGiaoHang.txt", ios::app);
-                        file << kh << dc << d;
+                        file  << kh << dc << d;
                         file.close();
                         cout << d;
                         cout << "Tien ship: " << d.tinhPhiShip() * gh.tongGioHang() << endl;
@@ -237,7 +241,7 @@ int main()
                         }
                     }
                 }
-                else if (chon == '5')
+                else if (chon == '6')
                 {
                     int chonDG;
                     do
@@ -292,6 +296,7 @@ int main()
 
                     } while (chonDG != 3);
                 }
+                else if(chon == '0') break;
             }
         }
         else
