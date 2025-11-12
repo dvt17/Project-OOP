@@ -9,15 +9,15 @@ private:
 
 public:
 	DiaChi(string sn = "", string d = "", string p = "", string q = "", string tp = "") : soNha(sn), tenDuong(d), tenPhuong(p), tenQuan(q), tenTP(tp) {}
-	friend istream& operator>>(istream& in, DiaChi& s)
+	friend istream &operator>>(istream &in, DiaChi &s)
 	{
 		in >> s.soNha >> s.tenDuong >> s.tenPhuong >> s.tenQuan >> s.tenTP;
 		return in;
 	}
-	friend ostream& operator<<(ostream& out, DiaChi& s)
+	friend ostream &operator<<(ostream &out, DiaChi &s)
 	{
 		out << "So Nha: " << s.soNha << endl;
-		out << "Duong: " << s.tenDuong << " | " << "Phuong: " << s.tenPhuong << " | " << "Quan: " << s.tenQuan << " | " << "Thanh Pho: " << s.tenTP << endl;
+		out << "Duong: " << s.tenDuong << " | " << "Phuong: " << s.tenPhuong << " | " << "Quan: " << s.tenQuan << " | " << "Thanh Pho: " << s.tenTP<<endl;
 		return out;
 	}
 	string getSN()

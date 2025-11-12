@@ -114,14 +114,18 @@ int main()
         }
         else if (c == 2 && dangNhap())
         {
+            GioHang gh;
+            string lc;
+            vector<mucTrongGioHang> dsGH;
             bool ok2 = true;
             while (ok2)
             {
                 string s = "========= MENU =========\n"
                     "[1]. Danh muc san pham\n"
                     "[2]. Game\n"
-                    "[3]. Mua hang\n"
-                    "[4]. Danh gia\n"
+                    "[3]. Xem gio hang\n"
+                    "[4]. Mua hang\n"
+                    "[5]. Danh gia\n"
                     "========================\n";
                 cout << s << endl;
                 char chon;
@@ -154,11 +158,9 @@ int main()
                 }
                 else if (chon == '3')
                 {
-                    GioHang gh;
-                    cout << "=== CHUONG TRINH QUAN LY GIO HANG ===\n";
+                    cout << "=== Lua Chon San Pham Cho Gio Hang ===\n";
                     gh.nhap();
-                    gh.xuat();
-                    string lc;
+                    dsGH = gh.getMuc();
                     cout << "\nBan co muon xoa san pham nao? (y/n): ";
                     cin >> lc;
                     lc = chuyenKiTu(lc);
@@ -169,8 +171,14 @@ int main()
                         cin.ignore();
                         getline(cin, tenXoa);
                         gh.xoaMuc(tenXoa);
-                        gh.xuat();
                     }
+                    cout << "==========Thong tin gio hang==========" << endl;
+                    for (auto it : dsGH) {
+                        it.displayInfo();
+                    }
+                    cout << "======================================" << endl;
+                }
+                else if (chon == '4') {
                     cout << "Ban co muon mua toan bo san pham trong gio hang hay khong(y/n)? ";
                     cin >> lc;
                     lc = chuyenKiTu(lc);
@@ -181,13 +189,13 @@ int main()
                         KhachHang kh;
                         cout << "Nhap thong tin(HoTen, SoDienThoai, Email,DiaChi): ";
                         cin >> kh >> dc;
-                        fstream file("ThongTinGiaoHang.txt", ios::app);
-                        file << kh << dc;
-                        file.close();
                         cout << "==========Thong tin don hang==========" << endl;
                         cout << kh << dc << endl;
                         DonHang d(dc);
                         d.ngayUocTinh();
+                        fstream file("ThongTinGiaoHang.txt", ios::app);
+                        file << kh << dc << d;
+                        file.close();
                         cout << d;
                         cout << "Tien ship: " << d.tinhPhiShip() * gh.tongGioHang() << endl;
                         cout << "Tong gio hang: " << gh.tongGioHang() << endl;
@@ -228,12 +236,8 @@ int main()
                             cout << "Thanh toan: " << tt - tt * gt << endl;
                         }
                     }
-                    else
-                    {
-                        break;
-                    }
                 }
-                else if (chon == '4')
+                else if (chon == '5')
                 {
                     int chonDG;
                     do
