@@ -353,4 +353,7 @@ public:
             return MaGiam("MAGIAM0", 0);
         }
     }
+    void setTen(string ten) {
+        tenNguoiChoi = ten;
+    }
 };

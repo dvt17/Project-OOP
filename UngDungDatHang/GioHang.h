@@ -81,4 +81,7 @@ public:
         }
         cout << "Khong tim thay san pham!\n";
     }
+    vector<mucTrongGioHang> getMuc() {
+        return dsMuc;
+    }
 };

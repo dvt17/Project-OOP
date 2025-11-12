@@ -17,7 +17,7 @@ public:
 	friend ostream &operator<<(ostream &out, DiaChi &s)
 	{
 		out << "So Nha: " << s.soNha << endl;
-		out << "Duong: " << s.tenDuong << " | " << "Phuong: " << s.tenPhuong << " | " << "Quan: " << s.tenQuan << " | " << "Thanh Pho: " << s.tenTP;
+		out << "Duong: " << s.tenDuong << " | " << "Phuong: " << s.tenPhuong << " | " << "Quan: " << s.tenQuan << " | " << "Thanh Pho: " << s.tenTP<<endl;
 		return out;
 	}
 	string getSN()
