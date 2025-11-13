@@ -115,7 +115,7 @@ int main()
         else if (c == 2 && dangNhap())
         {
             GioHang gh;
-            string lc;
+            string lc, dsMua[50];
             vector<mucTrongGioHang> dsGH;
             bool ok2 = true;
             while (ok2)
@@ -127,7 +127,7 @@ int main()
                     "[4]. Xem gio hang\n"
                     "[5]. Mua hang\n"
                     "[6]. Danh gia\n"
-                    "[0]. Thoat"
+                    "[0]. Thoat\n"
                     "========================\n";
                 cout << s << endl;
                 char chon;
@@ -155,25 +155,33 @@ int main()
                     t.setTen(ten);
                     t.CapNhatLuotChoi();
                     t.BatDau();
-                    MaGiam m = t.DoiThuong();
-                    ma.push_back(m);
+                    ma.push_back(t.DoiThuong());
                 }
                 else if (chon == '3')
                 {
                     cout << "=== Lua Chon San Pham Cho Gio Hang ===\n";
                     gh.nhap();
-                    dsGH = gh.getMuc();
                     cout << "\nBan co muon xoa san pham nao? (y/n): ";
                     cin >> lc;
                     lc = chuyenKiTu(lc);
                     if (lc == "Y" || lc == "YES")
                     {
-                        string tenXoa;
-                        cout << "Nhap ten san pham muon xoa: ";
                         cin.ignore();
-                        getline(cin, tenXoa);
-                        gh.xoaMuc(tenXoa);
+                        while (true) {
+                            string tenXoa;
+                            cout << "Nhap ten san pham muon xoa, muon dung bam [X]: ";
+                            getline(cin, tenXoa);
+                            tenXoa = chuyenKiTu(tenXoa);
+                            if (tenXoa == "X") {
+                                break;
+                            }
+                            else {
+                                gh.xoaMuc(tenXoa);
+                                cout << "Da xoa san pham " << tenXoa;
+                            }
+                        }
                     }
+                    dsGH = gh.getMuc();
                 }
                 else if(chon == '4'){
                     cout << "==========Thong tin gio hang==========" << endl;
@@ -183,28 +191,55 @@ int main()
                     cout << "======================================" << endl;
                 }
                 else if (chon == '5') {
-                    cout << "Ban xac nhan mua toan bo san pham trong gio hang hay khong(y/n)? ";
-                    cin >> lc;
-                    lc = chuyenKiTu(lc);
-                    if (lc == "Y" || lc == "YES")
-                    {
+                    int n = 0;
+                    while (true) {
+                        cout << "Nhap ten san pham muon mua trong gio hang, muon dung bam [X]: ";
+                        cin >> lc;
+                        lc = chuyenKiTu(lc);
+                        if (lc == "X") {
+                            break;
+                        }
+                        else {
+                            dsMua[n++] = lc;
+                        }
+                    }
+                    if (dsMua->empty()) {
+                    }
+                    else {
                         float gt;
                         DiaChi dc;
                         KhachHang kh;
                         cout << "Nhap thong tin(HoTen, SoDienThoai, Email,DiaChi): ";
                         cin >> kh >> dc;
                         cout << "==========Thong tin don hang==========" << endl;
-                        cout << kh << dc << endl;
+                        cout << kh;
                         DonHang d(dc);
                         d.ngayUocTinh();
+                        cout << "TenSP x(So Luong): " << endl;
                         fstream file("ThongTinGiaoHang.txt", ios::app);
-                        file  << kh << dc << d;
-                        file.close();
-                        cout << d;
+                        file << kh;
+                        for (int i = 0; i < dsMua->size();i++) {
+                            for (auto it : dsGH) {
+                                if (dsMua[i] == it.getTen()) {
+                                    cout << it.getTen() << " x" << it.getSoLuong() << endl;
+                                    file << it.getTen() << " x" << it.getSoLuong() << endl;
+                                }
+                            }
+                        }
+                        file << dc << d;
+                        cout << dc << d;
                         cout << "Tien ship: " << d.tinhPhiShip() * gh.tongGioHang() << endl;
                         cout << "Tong gio hang: " << gh.tongGioHang() << endl;
                         cout << "==========================================" << endl;
                         double tt = gh.tongGioHang() + (d.tinhPhiShip() * gh.tongGioHang());
+                        for (int i = 0; i < dsMua->size(); i++) {
+                            for (auto it : dsGH) {
+                                if (dsMua[i] == it.getTen()) {
+                                    gh.xoaMuc(dsMua[i]);
+                                }
+                            }
+                        }
+                        dsGH = gh.getMuc();
                         if (ma.empty())
                         {
                             cout << "Ban khong co ma giam gia nao!!!" << endl;
@@ -222,13 +257,12 @@ int main()
                                 {
                                     cout << x << endl;
                                 }
-                                string s;
                                 cout << "Nhap ma can dung: ";
-                                cin >> s;
-
+                                cin >> lc;
+                                lc = chuyenKiTu(lc);
                                 for (auto x : ma)
                                 {
-                                    if (s == x.getTM() && x.HieuLuc())
+                                    if (lc == x.getTM() && x.HieuLuc())
                                     {
                                         gt = x.DungMa();
                                         cout << "Dung ma thanh cong" << endl;
@@ -236,7 +270,6 @@ int main()
                                     }
                                 }
                             }
-
                             cout << "Thanh toan: " << tt - tt * gt << endl;
                         }
                     }
@@ -271,13 +304,11 @@ int main()
                             file << dg.getDiem() << "|"
                                 << dg.getBinhLuan() << "\n";
                             file.close();
-
                             cout << "Them danh gia thanh cong!\n";
                         }
                         else if (chonDG == 2)
                         {
                             cout << "\n===== DANH SACH DANH GIA =====\n";
-
                             ifstream file("DanhGia.txt");
                             if (!file.is_open())
                             {
@@ -293,7 +324,6 @@ int main()
                                 file.close();
                             }
                         }
-
                     } while (chonDG != 3);
                 }
                 else if(chon == '0') break;
@@ -305,6 +335,5 @@ int main()
             ok = false;
         }
     }
-
     return 0;
 }

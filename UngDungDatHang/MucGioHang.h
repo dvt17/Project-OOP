@@ -13,10 +13,8 @@ private:
     vector<SanPham> s;
 
 public:
-    mucTrongGioHang()
-    {
-    }
-    mucTrongGioHang(string ma, string ten, int quan)
+    mucTrongGioHang(){}
+    mucTrongGioHang(string ma , string ten, int quan)
         : SanPham(ma, ten), soLuong(quan) {}
 
     mucTrongGioHang nhapmuc()

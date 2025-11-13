@@ -75,7 +75,6 @@ public:
             if (it->getTen() == ten)
             {
                 dsMuc.erase(it);
-                cout << " Da xoa san pham " << ten << endl;
                 return;
             }
         }
