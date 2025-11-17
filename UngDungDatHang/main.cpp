@@ -155,7 +155,10 @@ int main()
                     t.setTen(ten);
                     t.CapNhatLuotChoi();
                     t.BatDau();
-                    ma.push_back(t.DoiThuong());
+                    MaGiam m = t.DoiThuong();
+                    if (m.getTM() != "MAGIAM0") {
+                        ma.push_back(m);
+                    }
                 }
                 else if (chon == '3')
                 {
@@ -183,7 +186,7 @@ int main()
                     }
                     dsGH = gh.getMuc();
                 }
-                else if(chon == '4'){
+                else if (chon == '4') {
                     cout << "==========Thong tin gio hang==========" << endl;
                     for (auto it : dsGH) {
                         it.displayInfo();
@@ -215,10 +218,10 @@ int main()
                         cout << kh;
                         DonHang d(dc);
                         d.ngayUocTinh();
-                        cout << "TenSP x(So Luong): " << endl;
+                        cout << "TenSP\tx(SoLuong): " << endl;
                         fstream file("ThongTinGiaoHang.txt", ios::app);
                         file << kh;
-                        for (int i = 0; i < dsMua->size();i++) {
+                        for (int i = 0; i < dsMua->size(); i++) {
                             for (auto it : dsGH) {
                                 if (dsMua[i] == it.getTen()) {
                                     cout << it.getTen() << " x" << it.getSoLuong() << endl;
@@ -326,7 +329,7 @@ int main()
                         }
                     } while (chonDG != 3);
                 }
-                else if(chon == '0') break;
+                else if (chon == '0') break;
             }
         }
         else

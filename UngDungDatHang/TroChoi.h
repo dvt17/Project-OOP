@@ -24,12 +24,12 @@ public:
         chonTro = 0;
         thoiGianBatDau = 0;
     }
-    friend istream &operator>>(istream &in, TroChoi &p)
+    friend istream& operator>>(istream& in, TroChoi& p)
     {
         in >> p.tenNguoiChoi >> p.diem >> p.luotTro1 >> p.luotTro2 >> p.luotTro3 >> p.thoiGianBatDau;
         return in;
     }
-    friend ostream &operator<<(ostream &out, const TroChoi &p)
+    friend ostream& operator<<(ostream& out, const TroChoi& p)
     {
         out << p.tenNguoiChoi << " " << p.diem << " " << p.luotTro1 << " " << p.luotTro2 << " " << p.luotTro3 << " " << p.thoiGianBatDau;
         return out;
@@ -43,7 +43,7 @@ public:
         {
             dsDuLieu[dulieu.tenNguoiChoi] = dulieu;
         }
-        for (auto &it : dsDuLieu)
+        for (auto& it : dsDuLieu)
         {
             if (tenNguoiChoi == it.first)
             {
@@ -71,32 +71,37 @@ public:
     }
     void BatDau()
     {
-        cout << "=== Xin chao, " << tenNguoiChoi << " ===\n";
-        cout << "Chon tro choi:\n";
-        cout << "1. Doan so\n2. Vong xoay man may\n3. Quy luat day so\n4. Thoat\n";
-        cout << "Nhap lua chon: ";
-        cin >> chonTro;
-        thoiGianBatDau = time(0);
-        switch (chonTro)
-        {
-        case 1:
-            Game1();
-            break;
-        case 2:
-            Game2();
-            break;
-        case 3:
-            Game3();
-            break;
-        case 4:
-            break;
-        default:
-            cout << "Lua chon khong hop le.\n";
-            break;
+        while (true) {
+            cout << "=== Xin chao, " << tenNguoiChoi << " ===\n";
+            cout << "Chon tro choi:\n";
+            cout << "1. Doan so\n2. Vong xoay man may\n3. Quy luat day so\n4. Thoat\n";
+            cout << "Nhap lua chon: ";
+            cin >> chonTro;
+            thoiGianBatDau = time(0);
+            switch (chonTro)
+            {
+            case 1:
+                Game1();
+                break;
+            case 2:
+                Game2();
+                break;
+            case 3:
+                Game3();
+                break;
+            case 4:
+                break;
+            default:
+                cout << "Lua chon khong hop le.\n";
+                break;
+            }
+            fstream file("TroChoi.txt", ios::out | ios::app);
+            file << *this << endl;
+            file.close();
+            if (chonTro >= 4) {
+                break;
+            }
         }
-        fstream file("TroChoi.txt", ios::out | ios::app);
-        file << *this << endl;
-        file.close();
     }
 
     void Game1()
@@ -133,7 +138,7 @@ public:
     }
     void Game2()
     {
-        char dsKitu[3] = {'%', '@', '*'};
+        char dsKitu[3] = { '%', '@', '*' };
         char Kitu[3], quay;
         srand(time(NULL));
         cin.ignore();
@@ -273,9 +278,9 @@ public:
         {
             cout << "Ban da het luot choi! " << endl;
             cout << "Day so: ";
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (i == 3)
+                if (i == 4)
                 {
                     cout << daySo[i] << endl;
                 }
